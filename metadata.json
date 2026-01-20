@@ -1,0 +1,5 @@
+{
+  "name": "Peanut Trader Client",
+  "description": "A mobile-responsive web client for the Peanut trading service, featuring account management, trade monitoring, and promotional updates.",
+  "requestFramePermissions": []
+}
