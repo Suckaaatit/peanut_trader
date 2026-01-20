@@ -1,5 +1,16 @@
 # Peanut Trader Client (PWA Architecture)
 
+<img width="364" height="434" alt="image" src="https://github.com/user-attachments/assets/40818128-0efd-46f4-88de-b134fa26ed8f" />
+
+<img width="917" height="401" alt="image" src="https://github.com/user-attachments/assets/da1bb20d-8aea-4f01-816d-f9e818ba4ef2" />
+
+<img width="911" height="421" alt="image" src="https://github.com/user-attachments/assets/60395bbe-75ac-42ca-ab63-9300e8e96e11" />
+
+
+
+
+
+
 ## 🏗 Architectural Overview
 This solution implements a **High-Fidelity Progressive Web App (PWA)** to fulfill the functional requirements of the Peanut Trader client.
 
@@ -26,3 +37,4 @@ Mobile networks are unreliable. This application implements a robust **Try-Catch
 * **Touch Gesture Engine:** Custom implementation of `onTouch` events to simulate native Android "Pull-to-Refresh" with resistance physics.
 * **Offline-First:** Service Worker caching strategy ensures the app shell loads instantly.
 * **State Persistence:** `AuthContext` persists user sessions via LocalStorage.
+
