@@ -14,7 +14,7 @@
 ## 🏗 Architectural Overview
 This solution implements a **High-Fidelity Progressive Web App (PWA)** to fulfill the functional requirements of the Peanut Trader client.
 
-While the original specification suggested a native approach (Java/Kotlin), this architecture was chosen to demonstrate a modern **"Write Once, Run Everywhere"** strategy. It delivers a native-grade experience (60fps animations, offline support, standalone installation) while maintaining a unified codebase.
+While the original specification suggested a Flutter approach, this architecture was chosen to demonstrate a modern **"Write Once, Run Everywhere"** strategy. It delivers a native-grade experience (60fps animations, offline support, standalone installation) while maintaining a unified codebase.
 
 ### ⚡ Operational Instructions (No Build Step)
 To facilitate immediate code review without environment complexity (Node/Gradle issues), this project utilizes **ES Modules** and **Babel Standalone**.

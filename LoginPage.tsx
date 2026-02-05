@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { api } from '../services/api';
-import { useAuth } from '../contexts/AuthContext';
+import { api } from './api';
+import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { User, Lock, AlertCircle, Loader2 } from 'lucide-react';
-import { OfflineBanner } from '../components/OfflineBanner';
+import { OfflineBanner } from './OfflineBanner';
 
 export const LoginPage: React.FC = () => {
   const [loginId, setLoginId] = useState('2088888');
@@ -38,6 +38,12 @@ export const LoginPage: React.FC = () => {
           <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">🥜</div>
           <h2 className="text-3xl font-extrabold text-gray-900">Welcome Back</h2>
           <p className="mt-2 text-sm text-gray-600">Peanut Trader Client</p>
+        </div>
+        <div className="mb-6 rounded-lg border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-900">
+          <p className="font-semibold">Dear Akash,</p>
+          <p>Please redo the test using Flutter.</p>
+          <p>We need a candidate who is proficient in the Flutter framework for this role.</p>
+          <p className="mt-2 font-semibold text-blue-800">Flutter submissions are required for this position.</p>
         </div>
 
         {error && (

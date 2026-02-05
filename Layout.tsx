@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from './AuthContext';
 import { LogOut, LayoutDashboard } from 'lucide-react';
 
 interface LayoutProps {

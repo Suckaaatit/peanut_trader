@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { api } from '../services/api';
-import { useAuth } from '../contexts/AuthContext';
-import { AccountInfo, Trade, Promotion } from '../types';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { api } from './api';
+import { useAuth } from './AuthContext';
+import { AccountInfo, Trade, Promotion } from './types';
 import { LogOut, Phone, RefreshCw, TrendingUp, TrendingDown } from 'lucide-react';
-import { OfflineBanner } from '../components/OfflineBanner';
+import { OfflineBanner } from './OfflineBanner';
 
 export const DashboardPage: React.FC = () => {
   const { user, logout } = useAuth();
@@ -12,10 +12,14 @@ export const DashboardPage: React.FC = () => {
   const [trades, setTrades] = useState<Trade[]>([]);
   const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [timeEstimate, setTimeEstimate] = useState('');
+  const [timeResult, setTimeResult] = useState('');
+  const timingLoadedRef = useRef(false);
 
   // Physics for Pull-to-Refresh
   const [startY, setStartY] = useState(0);
   const [pullDistance, setPullDistance] = useState(0);
+  const [timingSavedAt, setTimingSavedAt] = useState<string | null>(null);
 
   const loadData = async () => {
     if (!user) return;
@@ -41,6 +45,31 @@ export const DashboardPage: React.FC = () => {
   useEffect(() => {
     loadData();
   }, [user]);
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('peanut_task_timing');
+      if (!stored) return;
+      const parsed = JSON.parse(stored) as { estimate?: string; result?: string; savedAt?: string };
+      setTimeEstimate(parsed?.estimate ?? '');
+      setTimeResult(parsed?.result ?? '');
+      setTimingSavedAt(parsed?.savedAt ?? null);
+    } catch {
+      localStorage.removeItem('peanut_task_timing');
+    } finally {
+      timingLoadedRef.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!timingLoadedRef.current) return;
+    const payload = {
+      estimate: timeEstimate,
+      result: timeResult,
+      savedAt: new Date().toISOString()
+    };
+    localStorage.setItem('peanut_task_timing', JSON.stringify(payload));
+    setTimingSavedAt(payload.savedAt);
+  }, [timeEstimate, timeResult]);
   const totalProfit = useMemo(() => trades.reduce((sum, t) => sum + t.profit, 0), [trades]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -107,6 +136,40 @@ export const DashboardPage: React.FC = () => {
             <p className="text-xs uppercase font-bold text-slate-400">Trades</p>
             <p className="text-2xl font-bold text-slate-700">{trades.length}</p>
           </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-5 space-y-3">
+          <div>
+            <h3 className="font-bold text-slate-800">Task Timing</h3>
+            <p className="text-xs text-slate-500">
+              Record the estimated completion time before starting and the resulting time after completion.
+            </p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label className="text-xs font-semibold text-slate-600 flex flex-col gap-2">
+              Estimated Completion Time
+              <input
+                type="text"
+                value={timeEstimate}
+                onChange={e => setTimeEstimate(e.target.value)}
+                placeholder="e.g., 6 hours"
+                className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-700 focus:border-indigo-500 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="text-xs font-semibold text-slate-600 flex flex-col gap-2">
+              Resulting Time
+              <input
+                type="text"
+                value={timeResult}
+                onChange={e => setTimeResult(e.target.value)}
+                placeholder="e.g., 5.5 hours"
+                className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-700 focus:border-indigo-500 focus:ring-indigo-500"
+              />
+            </label>
+          </div>
+          {timingSavedAt && (
+            <p className="text-[11px] text-slate-400">Last saved: {new Date(timingSavedAt).toLocaleString()}</p>
+          )}
         </div>
 
         <div>

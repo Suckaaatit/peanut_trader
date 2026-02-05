@@ -1,4 +1,4 @@
-import { User, AccountInfo, Trade, Promotion } from '../types';
+import { User, AccountInfo, Trade, Promotion } from './types';
 
 // --- MOCK DATA (Safety Net for CORS/Offline) ---
 const MOCK_ACCOUNT: AccountInfo = {
