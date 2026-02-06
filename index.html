@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Peanut Trader</title>
+    <meta name="description" content="Professional Mobile Trading Client">
+    <link rel="manifest" href="manifest.json" />
+    
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f8fafc; /* Slate-50 */
+            overscroll-behavior-y: none; /* Disables Browser Pull-to-Refresh */
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Hides Scrollbar for "Cards" view */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+      (function () {
+        function showError(err) {
+          var root = document.getElementById('root');
+          if (!root) return;
+          var msg = (err && (err.stack || err.message)) ? (err.stack || err.message) : String(err);
+          root.innerHTML = '' +
+            '<div style="font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; padding: 16px;">' +
+              '<div style="background:#fff;border:1px solid #fee2e2;border-radius:12px;padding:16px;">' +
+                '<div style="color:#b91c1c;font-weight:700;margin-bottom:8px;">App Crash (early)</div>' +
+                '<pre style="margin:0;color:#334155;white-space:pre-wrap;">' + msg + '</pre>' +
+              '</div>' +
+            '</div>';
+        }
+        window.addEventListener('error', function (e) { showError(e.error || e.message || e); });
+        window.addEventListener('unhandledrejection', function (e) { showError(e.reason || e); });
+      })();
+    </script>
+
+    <script type="module" src="./index.tsx"></script>
+</body>
+</html>
